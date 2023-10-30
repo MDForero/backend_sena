@@ -17,7 +17,7 @@ return new class extends Migration
             $table->json('plates')->nullable();
             $table->enum('status', ['pending', 'preparing', 'ready', 'delivered'])->default('pending');
             $table->foreignId('user_id')->references('id')->on('users');
-            $table->foreignIdFor(Table::class);
+            // $table->foreignIdFor(Table::class)->nullable()->constrained();
             $table->timestamps();
         });
     }
