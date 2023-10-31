@@ -34,7 +34,7 @@ Route::get('orders/{id}', [OrderController::class, 'show']);
 Route::post('orders', [OrderController::class, 'store']);
 Route::post('orders/{id}', [OrderController::class, 'update']);
 
-Route::get('invoices', [InvoiceController::class, 'index']);
-Route::get('invoices/{id}', [InvoiceController::class, 'show']);
-Route::post('invoices', [InvoiceController::class, 'store']);
-Route::post('invoices/{id}', [InvoiceController::class, 'update']);
+Route::get('invoices', [InvoicesController::class, 'index']);
+Route::get('invoices/{id}', [InvoicesController::class, 'show']);
+Route::post('invoices', [InvoicesController::class, 'store']);
+Route::post('invoices/{id}', [InvoicesController::class, 'update']);
