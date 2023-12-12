@@ -24,5 +24,9 @@ class Article extends Model
     {
         return $this->belongsToMany(Order::class);
     }
+    public function materials()
+    {
+        return $this->hasMany(Material::class);
+    }
     
 }

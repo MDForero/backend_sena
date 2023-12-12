@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\Article;
 use App\Models\Table;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,7 +18,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->json('plates')->nullable();
             $table->enum('status', ['pending', 'preparing', 'ready', 'delivered'])->default('pending');
-            $table->foreignId('user_id')->references('id')->on('users');
+            $table->foreignIdFor(User::class);
             // $table->foreignIdFor(Table::class)->nullable()->constrained();
             $table->timestamps();
         });

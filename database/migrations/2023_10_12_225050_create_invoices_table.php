@@ -15,7 +15,15 @@ return new class extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
-            $table->string('status');
+            $table->enum(
+                'status',
+                [
+                    'pendiente',
+                    'cancelado',
+
+                ]
+            )->default('pendiente');
+
             $table->string('address');
             $table->string('description');
             $table->string('value');

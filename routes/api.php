@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\InvoicesController;
+use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -38,3 +40,12 @@ Route::get('invoices', [InvoicesController::class, 'index']);
 Route::get('invoices/{id}', [InvoicesController::class, 'show']);
 Route::post('invoices', [InvoicesController::class, 'store']);
 Route::post('invoices/{id}', [InvoicesController::class, 'update']);
+
+Route::get('users', [UserController::class, 'index']);
+Route::get('users/{id}', [UserController::class, 'show']);
+Route::post('users/{id}', [UserController::class, 'update']);
+
+Route::get('materials', [MaterialController::class, 'index']);
+Route::get('materials/{id}', [MaterialController::class, 'show']);
+Route::post('materials', [MaterialController::class, 'create']);
+Route::post('materials/{id}', [MaterialController::class, 'update']);

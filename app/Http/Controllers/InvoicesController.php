@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Invoice;
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class InvoicesController extends Controller
@@ -40,6 +41,9 @@ class InvoicesController extends Controller
                 'email' => $request->email,
                 'nit' => $request->nit,
                 'order_id' => $request->order_id,
+            ]);
+            Order::find($request->order_id)->update([
+                'status' => 'delivered',
             ]);
             return response()->json([
                 'message' => 'Factura creada correctamente',
