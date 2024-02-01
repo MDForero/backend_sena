@@ -28,6 +28,7 @@ class ArticleStoreRequest extends FormRequest
                 'description' => 'required|string',
                 'category' => 'required|string',
                 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'materials' => 'nullable|array'
             ];
         } else {
             return [
@@ -36,6 +37,7 @@ class ArticleStoreRequest extends FormRequest
                 'description' => 'string',
                 'category' => 'string',
                 'image' => 'string',
+                'materials' => 'array'
             ];
         }
         return [];

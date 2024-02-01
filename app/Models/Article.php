@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Article extends Model
 {
@@ -20,13 +21,8 @@ class Article extends Model
         'category',
     ];
 
-    public function orders()
+    public function materials(): BelongsToMany
     {
-        return $this->belongsToMany(Order::class);
+        return $this->belongsToMany(Material::class, 'material_article');
     }
-    public function materials()
-    {
-        return $this->hasMany(Material::class);
-    }
-    
 }

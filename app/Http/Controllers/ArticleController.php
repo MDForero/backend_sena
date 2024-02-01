@@ -35,17 +35,17 @@ class ArticleController extends Controller
         try {
             if ($request->image) {
                 $imageName = Str::random(32) . '.' . $request->image->getClientOriginalExtension();
-                Article::create([
+                $article = Article::create([
                     'name' => $request->name,
                     'description' => $request->description,
                     'value' => $request->value,
                     'image' => $imageName,
                     'category' => $request->category,
                 ]);
+                foreach ($request->materials as $material) {
+                    $article->materials()->attach($material);
+                };                
                 Storage::disk('public')->put($imageName, file_get_contents($request->image));
-                return response()->json([
-                    'message' => 'Articulo creado correctamente',
-                ], 201);
             } else {
                 Article::create([
                     'name' => $request->name,
@@ -53,10 +53,11 @@ class ArticleController extends Controller
                     'value' => $request->value,
                     'category' => $request->category,
                 ]);
-                return response()->json([
-                    'message' => 'Articulo creado correctamente',
-                ], 201);
             }
+
+            return response()->json([
+                'message' => 'Articulo creado correctamente',
+            ], 201);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Error al guardar la imagen',
@@ -100,6 +101,8 @@ class ArticleController extends Controller
             $Article->description = $request->description;
             $Article->value = $request->value;
             $Article->category = $request->category;
+            $materials = $request->materials;
+            $Article->materials()->attach($materials);
 
             if ($request->image) {
                 $imageName = Str::random(32) . '.' . $request->image->getClientOriginalExtension();
@@ -111,7 +114,7 @@ class ArticleController extends Controller
             }
             $Article->save();
             return response()->json([
-                'message' => 'Articulo actualizado correctamente',
+                'message' => 'Articulo actualizado correctamente' . $Article->materials()->get(),
             ], 201);
         } catch (\Exception $e) {
             return response()->json([

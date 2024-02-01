@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Material extends Model
 {
@@ -14,10 +15,8 @@ class Material extends Model
         'quantity',
     ];
 
-    public function orders()
+    public function articles():BelongsToMany
     {
-        return $this->belongsToMany(Order::class, 'order_material', 'material_id', 'order_id');
+        return $this->belongsToMany(Article::class);
     }
-
-     
 }
