@@ -12,15 +12,15 @@ class Order extends Model
     use HasFactory;
     use HasUuids;
 
-    protected $fillable = ['plates', 'status', 'user_id', 'table_id'];
+    protected $fillable = ['plates', 'status', 'user_id', 'table_id', 'invoice_id'];
 
 
-    public function tables()
+    public function invoice() 
     {
-        return $this->belongsTo(Table::class, 'table_id', 'id', 'tables');
+        return $this->belongsTo(Invoice::class);
     }
 
-    public function user()
+    public function user() 
     {
         return $this->belongsTo(User::class);
     }

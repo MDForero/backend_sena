@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Article;
+use App\Models\Invoice;
 use App\Models\Table;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
@@ -19,6 +20,7 @@ return new class extends Migration
             $table->json('plates')->nullable();
             $table->enum('status', ['pending', 'preparing', 'ready', 'delivered'])->default('pending');
             $table->foreignIdFor(User::class);
+            $table->foreignIdFor(Invoice::class)->nullable();
             // $table->foreignIdFor(Table::class)->nullable()->constrained();
             $table->timestamps();
         });

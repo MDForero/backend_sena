@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name');
             $table->enum(
                 'status',
                 [
@@ -23,13 +23,8 @@ return new class extends Migration
 
                 ]
             )->default('pendiente');
-
             $table->string('address');
-            $table->string('description');
-            $table->string('value');
-            $table->string('phone');
-            $table->string('email');
-            $table->string('nit');
+            $table->foreignIdFor(User::class);
             $table->foreignIdFor(Order::class);
             $table->timestamps();
         });

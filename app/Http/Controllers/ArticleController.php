@@ -42,10 +42,8 @@ class ArticleController extends Controller
                     'image' => $imageName,
                     'category' => $request->category,
                 ]);
-                foreach ($request->materials as $material) {
-                    $article->materials()->attach($material);
-                };                
                 Storage::disk('public')->put($imageName, file_get_contents($request->image));
+           
             } else {
                 Article::create([
                     'name' => $request->name,

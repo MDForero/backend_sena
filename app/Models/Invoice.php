@@ -12,20 +12,19 @@ class Invoice extends Model
     use HasUuids;
 
     protected $fillable = [
-        'name',
-        'description',
-        'value',
         'status',
         'address',
-        'phone',
-        'email',
-        'nit',
+        'user_id',
         'order_id',
     ];
 
-    public function orders()
+    public function order() 
     {
-        return $this->belongsTo(Order::class, 'order_id', 'id', 'orders');
+        return $this->hasOne(Order::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
     
 }

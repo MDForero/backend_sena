@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Invoice;
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class InvoicesController extends Controller
@@ -13,7 +14,7 @@ class InvoicesController extends Controller
      */
     public function index()
     {
-        $Invoice = Invoice::all();
+        $Invoice = Invoice::with('user', 'order')->get();
         return response()->json($Invoice);
     }
 
@@ -31,19 +32,23 @@ class InvoicesController extends Controller
     public function store(Request $request)
     {
         try {
-            Invoice::create([
-                'name' => $request->name,
-                'description' => $request->description,
-                'value' => $request->value,
+
+
+            $user = User::all()->where('nit', $request->nit)->first();
+            if (!$user) {
+                return response()->json([
+                    'message' => 'Usuario no encontrado'
+                ], 404);
+            }
+            $invoice = Invoice::create([
                 'status' => $request->status,
                 'address' => $request->address,
-                'phone' => $request->phone,
-                'email' => $request->email,
-                'nit' => $request->nit,
+                'user_id' => $user->id,
                 'order_id' => $request->order_id,
             ]);
             Order::find($request->order_id)->update([
                 'status' => 'delivered',
+                'invoice_id' => $invoice->id,
             ]);
             return response()->json([
                 'message' => 'Factura creada correctamente',
@@ -62,8 +67,12 @@ class InvoicesController extends Controller
     public function show($id)
     {
         try {
-            $Invoice = Invoice::find($id);
-            return response()->json($Invoice);
+            $Invoice = Invoice::with('user')->find($id);
+            return response()->json([
+                'invoice' => $Invoice,
+                'order' => $Invoice->order
+
+            ]);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Error al obtener la factura',
@@ -87,7 +96,7 @@ class InvoicesController extends Controller
     {
         $Invoice = Invoice::find($id);
         if ($Invoice) {
-            try {                
+            try {
                 $Invoice->update([
                     'status' => $request->status,
                 ]);
@@ -112,6 +121,5 @@ class InvoicesController extends Controller
      */
     public function destroy(Invoice $Invoice)
     {
-        
     }
 }

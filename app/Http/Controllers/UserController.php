@@ -36,12 +36,18 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $nit)
     {
         try{
-            $user = User::find($id);
+            $user = User::all()->where('nit', $nit)->first();
+            if(!$user){
+                return response()->json([
+                    'message' => 'user not found'
+                ], 404);
+            }
             return response()->json([
-                'user' => $user
+                'user' => $user,
+                'invoices'=>$user->invoices
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
@@ -71,7 +77,7 @@ class UserController extends Controller
             $user->status = $request->status;
             $user->save(); 
             return response()->json([
-                'user' => $user
+                'user' => $user,
             ], 200);
         }catch (\Exception $e) {
             return response()->json([
