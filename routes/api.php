@@ -43,6 +43,7 @@ Route::post('invoices/{id}', [InvoicesController::class, 'update']);
 
 Route::get('users', [UserController::class, 'index']);
 Route::get('users/{id}', [UserController::class, 'show']);
+Route::post('user-register', [UserController::class, 'store']);
 Route::post('users/{id}', [UserController::class, 'update']);
 
 Route::get('materials', [MaterialController::class, 'index']);
