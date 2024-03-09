@@ -45,6 +45,7 @@ class InvoicesController extends Controller
                 'address' => $request->address,
                 'user_id' => $user->id,
                 'order_id' => $request->order_id,
+                'value' => $request->value,
             ]);
             Order::find($request->order_id)->update([
                 'status' => 'delivered',

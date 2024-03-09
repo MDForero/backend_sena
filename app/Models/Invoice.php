@@ -16,6 +16,7 @@ class Invoice extends Model
         'address',
         'user_id',
         'order_id',
+        'value'
     ];
 
     public function order() 

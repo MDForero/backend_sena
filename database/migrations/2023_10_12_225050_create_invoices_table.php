@@ -15,15 +15,9 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->enum(
-                'status',
-                [
-                    'pendiente',
-                    'cancelado',
-
-                ]
-            )->default('pendiente');
+            $table->enum('status',['pendiente','cancelado',])->default('pendiente');
             $table->string('address');
+            $table->bigInteger('value');
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Order::class);
             $table->timestamps();
