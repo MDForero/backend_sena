@@ -14,7 +14,6 @@ class UserController extends Controller
     {
         $user = User::all();
         return response()->json(['user' => $user], 200);
-
     }
 
     /**
@@ -22,7 +21,6 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
@@ -30,7 +28,39 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+
+            $admin = User::find($request->id);
+            $nit = User::all()->where('nit', $request->nit)->first();
+            if ($nit) {
+                return response()->json([
+                    'message' => 'user already exists'
+                ], 404);
+            }
+            $email = User::all()->where('email', $request->email)->first();
+            if ($email) {
+                return response()->json([
+                    'message' => 'email already exists'
+                ], 404);
+            }
+
+            if ($admin->role == 'admin') {
+                $user = new User();
+                $user->name = $request->name;
+                $user->nit = $request->nit;
+                $user->email = $request->email;
+                $user->password = $request->password;
+                $user->save();
+                return response()->json([
+                    'user' => $user,
+                ], 200);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'user not found',
+                'error' => $e->getMessage()
+            ], 404);
+        }
     }
 
     /**
@@ -38,16 +68,17 @@ class UserController extends Controller
      */
     public function show(string $nit)
     {
-        try{
+        try {
             $user = User::all()->where('nit', $nit)->first();
-            if(!$user){
+            
+            if (!$user) {
                 return response()->json([
                     'message' => 'user not found'
                 ], 404);
             }
             return response()->json([
                 'user' => $user,
-                'invoices'=>$user->invoices
+                'invoices' => $user->invoices
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
@@ -70,16 +101,16 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        
-        try{
+
+        try {
             $user = User::find($id);
             $user->role = $request->role;
             $user->status = $request->status;
-            $user->save(); 
+            $user->save();
             return response()->json([
                 'user' => $user,
             ], 200);
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             return response()->json([
                 'message' => 'user not found',
                 'error' => $e->getMessage()
@@ -87,7 +118,7 @@ class UserController extends Controller
         }
     }
 
- 
+
     public function destroy(string $id)
     {
         //
