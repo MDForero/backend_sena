@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignIdFor(Material::class);
             $table->foreignIdFor(Article::class);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

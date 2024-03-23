@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('image');
             $table->string('category');
             $table->foreignIdFor(Material::class)->nullable();
+            $table->softDeletes();
+
         });
         
     }

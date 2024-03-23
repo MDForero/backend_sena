@@ -18,9 +18,10 @@ return new class extends Migration
             $table->string('nit')->max(20)->unique()->required();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('role',['admin','client','manager','waiter','chef',])->default('client');
+            $table->enum('role',['admin','client','manager','waitress','chef',])->default('client');
             $table->enum('status',['authorized','unauthorized'])->default('unauthorized'); 
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

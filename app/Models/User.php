@@ -6,15 +6,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-
+use Laravel\Sanctum\PersonalAccessToken;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasUuids;
+    use HasApiTokens, HasFactory, Notifiable, HasUuids, SoftDeletes;
     
     /**
      * The attributes that are mass assignable.
@@ -38,6 +39,10 @@ class User extends Authenticatable
         return $this->hasMany(Invoice::class);
     }
     
+    public function token(): MorphOne
+    {
+        return $this->morphOne(PersonalAccessToken::class, 'tokenable');
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

@@ -23,6 +23,8 @@ return new class extends Migration
             $table->foreignIdFor(Invoice::class)->nullable();
             // $table->foreignIdFor(Table::class)->nullable()->constrained();
             $table->timestamps();
+            $table->softDeletes();
+
         });
     }
 

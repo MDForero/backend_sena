@@ -22,31 +22,39 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
-    return $request->user();
+    if ($request->user()->token) {
+        $request->user()->tokens()->delete();
+    }
+    return response()->json([
+        'user' => $request->user(),
+        'token' => $request->user()->createToken('API TOKEN')->plainTextToken
+    ]);
 });
 
-Route::get('articles', [ArticleController::class, 'index']);
-Route::get('article/{id}', [ArticleController::class, 'show']);
-Route::post('article', [ArticleController::class, 'store']);
-Route::post('article/{id}', [ArticleController::class, 'update']);
-Route::delete('article/{id}', [ArticleController::class, 'destroy']);
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('articles', [ArticleController::class, 'index']);
+    Route::get('article/{id}', [ArticleController::class, 'show']);
+    Route::post('article', [ArticleController::class, 'store']);
+    Route::post('article/{id}', [ArticleController::class, 'update']);
+    Route::delete('article/{id}', [ArticleController::class, 'destroy']);
 
-Route::get('orders', [OrderController::class, 'index']);
-Route::get('orders/{id}', [OrderController::class, 'show']);
-Route::post('orders', [OrderController::class, 'store']);
-Route::post('orders/{id}', [OrderController::class, 'update']);
+    Route::get('orders', [OrderController::class, 'index']);
+    Route::get('orders/{id}', [OrderController::class, 'show']);
+    Route::post('orders', [OrderController::class, 'store']);
+    Route::post('orders/{id}', [OrderController::class, 'update']);
 
-Route::get('invoices', [InvoicesController::class, 'index']);
-Route::get('invoices/{id}', [InvoicesController::class, 'show']);
-Route::post('invoices', [InvoicesController::class, 'store']);
-Route::post('invoices/{id}', [InvoicesController::class, 'update']);
+    Route::get('invoices', [InvoicesController::class, 'index']);
+    Route::get('invoices/{id}', [InvoicesController::class, 'show']);
+    Route::post('invoices', [InvoicesController::class, 'store']);
+    Route::post('invoices/{id}', [InvoicesController::class, 'update']);
 
-Route::get('users', [UserController::class, 'index']);
-Route::get('users/{id}', [UserController::class, 'show']);
-Route::post('user-register', [UserController::class, 'store']);
-Route::post('users/{id}', [UserController::class, 'update']);
+    Route::get('users', [UserController::class, 'index']);
+    Route::post('user-register', [UserController::class, 'store']);
+    Route::get('users/{id}', [UserController::class, 'show']);
+    Route::post('users/{id}', [UserController::class, 'update']);
 
-Route::get('materials', [MaterialController::class, 'index']);
-Route::get('materials/{id}', [MaterialController::class, 'show']);
-Route::post('materials', [MaterialController::class, 'create']);
-Route::post('materials/{id}', [MaterialController::class, 'update']);
+    Route::get('materials', [MaterialController::class, 'index']);
+    Route::get('materials/{id}', [MaterialController::class, 'show']);
+    Route::post('materials', [MaterialController::class, 'create']);
+    Route::post('materials/{id}', [MaterialController::class, 'update']);
+});

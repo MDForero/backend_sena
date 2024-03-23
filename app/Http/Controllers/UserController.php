@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -28,7 +29,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        try{
+        try {
 
             $admin = User::find($request->id);
             $nit = User::all()->where('nit', $request->nit)->first();
@@ -53,6 +54,7 @@ class UserController extends Controller
                 $user->save();
                 return response()->json([
                     'user' => $user,
+                    'message' => 'user created successfully'
                 ], 200);
             }
         } catch (\Exception $e) {
@@ -70,7 +72,7 @@ class UserController extends Controller
     {
         try {
             $user = User::all()->where('nit', $nit)->first();
-            
+
             if (!$user) {
                 return response()->json([
                     'message' => 'user not found'
@@ -103,7 +105,7 @@ class UserController extends Controller
     {
 
         try {
-            $user = User::find($id);
+            $user = User::where('nit', $id)->first();
             $user->role = $request->role;
             $user->status = $request->status;
             $user->save();

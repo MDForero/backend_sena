@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\OrderRequest;
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Http\Request;
+
 
 class OrderController extends Controller
 {
@@ -13,8 +15,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::all();
-
+        $orders = Order::with('user')->get();
         return response()->json([
             'orders' => $orders
         ], 200);
@@ -32,23 +33,31 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->json()->all();
-        $platesArray = $data['plates'];
-        $user = $data['user_id'];
-        $platesJson = json_encode($platesArray);
+        $platesJson= json_encode($request->plates);
         try {
-            Order::create([
-                'plates' => $platesJson,
-                'user_id' => $user,
+            // $isAvailable = User::where('id', $request->user_id)->where('role', ['admin', 'manager', 'waitress'])->first();
+            // if (!$isAvailable) {
+            //     return response()->json([
+            //         'message' => 'you already have an order',
+            //     ], 400);
+            // }
+        
+            $order = Order::create([
+                'user_id' => $request->user_id,
+                'plates' => $platesJson
             ]);
 
+            
+        
             return response()->json([
-                'data' => $data
+                'data' => $order,
+                'plates'=> $platesJson
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'failed to save data',
-                'error' => $e->getMessage()
+                'error' => $e->getMessage(),
+                'request'=>$platesJson
             ], 500);
         }
     }
@@ -58,17 +67,17 @@ class OrderController extends Controller
      */
     public function show(string $id)
     {
-        $order = Order::find($id);
-
-        if (!$order) {
+        try{
+            $order = Order::with('user')->find($id);
+            $order->plates = json_decode($order->plates);
             return response()->json([
-                'message' => 'not found',
-            ], 404);
-        } else {
-            return response()->json([
-                'message' => 'detail data order',
                 'order' => $order
             ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'failed to get data',
+                'error' => $e->getMessage()
+            ], 500);
         }
     }
 

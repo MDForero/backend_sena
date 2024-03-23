@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('name', 100)->nullable(false);
             $table->integer('quantity')->nullable(false);
             $table->foreignIdFor(Article::class)->nullable();
+            $table->softDeletes();
+
         });
     }
 
