@@ -14,7 +14,7 @@ class InvoicesController extends Controller
      */
     public function index()
     {
-        $Invoice = Invoice::with('user', 'order')->get();
+        $Invoice = Invoice::with('user', 'order')->paginate();
         return response()->json($Invoice);
     }
 

@@ -13,8 +13,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::all();
-        return response()->json(['user' => $user], 200);
+        $user = User::paginate(25);
+        return response()->json($user,200);
     }
 
     /**

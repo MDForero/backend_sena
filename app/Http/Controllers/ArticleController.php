@@ -15,7 +15,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $Articles = Article::all();
+        $Articles = Article::paginate(25);
         return response()->json($Articles);
     }
 
@@ -35,7 +35,7 @@ class ArticleController extends Controller
         try {
             if ($request->image) {
                 $imageName = Str::random(32) . '.' . $request->image->getClientOriginalExtension();
-                $article = Article::create([
+                Article::create([
                     'name' => $request->name,
                     'description' => $request->description,
                     'value' => $request->value,

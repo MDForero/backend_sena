@@ -18,3 +18,8 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+*.mp4
+*.zip
+*.pdf
+Repositorio.txt
+END POINTS.txt

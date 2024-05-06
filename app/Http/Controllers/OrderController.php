@@ -15,10 +15,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::with('user')->get();
-        return response()->json([
-            'orders' => $orders
-        ], 200);
+        $orders = Order::with('user')->paginate(25);
+        return response()->json($orders, 200);
     }
 
     /**
