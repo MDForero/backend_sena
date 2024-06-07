@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
             'role'=> 'admin',
             'remember_token'=> Str::random(10),
             'status'=> 'authorized',
+            'permissions'=> 'dashboard,ordenes,articulos,facturacion,usuarios,inventario',
         ]);
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

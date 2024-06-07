@@ -51,6 +51,7 @@ class UserController extends Controller
                 $user->nit = $request->nit;
                 $user->email = $request->email;
                 $user->password = $request->password;
+                $user->permissions = $request->permissions;
                 $user->save();
                 return response()->json([
                     'user' => $user,
@@ -108,6 +109,7 @@ class UserController extends Controller
             $user = User::where('nit', $id)->first();
             $user->role = $request->role;
             $user->status = $request->status;
+            $user->permissions = $request->permissions;
             $user->save();
             return response()->json([
                 'user' => $user,

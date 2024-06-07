@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('password');
             $table->enum('role',['admin','client','manager','waitress','chef',])->default('client');
             $table->enum('status',['authorized','unauthorized'])->default('unauthorized'); 
+            $table->set('permissions',['dashboard','ordenes', 'articulos', 'facturacion', 'usuarios', 'inventario'])->default('dashboard');  
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();

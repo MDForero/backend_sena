@@ -29,6 +29,7 @@ class User extends Authenticatable
         'nit',
         'status',
         'role',
+        'permissions',
     ];
     public function orders()
     {
