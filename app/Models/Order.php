@@ -17,6 +17,10 @@ class Order extends Model
 
     protected $fillable = ['plates', 'status', 'user_id', 'table_id', 'invoice_id'];
 
+    public function invoices(){
+        return $this->hasOne(Invoice::class, 'invoice_id');
+    
+    }
 
     public function invoice()
     {

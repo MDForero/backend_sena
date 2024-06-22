@@ -18,8 +18,8 @@ return new class extends Migration
             $table->enum('status',['pendiente','cancelado',])->default('pendiente');
             $table->string('address');
             $table->bigInteger('value');
-            $table->foreignIdFor(User::class);
-            $table->foreignIdFor(Order::class);
+            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignIdFor(Order::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
             $table->softDeletes();
 

@@ -30,6 +30,7 @@ class User extends Authenticatable
         'status',
         'role',
         'permissions',
+        'imgProfile'
     ];
     public function orders()
     {

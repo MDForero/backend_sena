@@ -19,7 +19,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->json('plates')->nullable();
             $table->enum('status', ['pending', 'preparing', 'ready', 'delivered'])->default('pending');
-            $table->foreignIdFor(User::class);
+            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignIdFor(Invoice::class)->nullable();
             // $table->foreignIdFor(Table::class)->nullable()->constrained();
             $table->timestamps();

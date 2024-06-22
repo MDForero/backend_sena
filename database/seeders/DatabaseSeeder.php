@@ -25,9 +25,10 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([
             'id'=> fake()->uuid(),
             'nit'=>'1116803258',
-            'name'=>'admin',
+            'name'=>'Michael Daniel Forero Roldan',
             'email'=> 'prueba@prueba.com',
             'password'=> '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+            'imgProfile'=> 'profiles/us4OIISFXp4IwhhSA3YOqEGgdqjM8MHm1bqJgdoI.jpg', 
             'role'=> 'admin',
             'remember_token'=> Str::random(10),
             'status'=> 'authorized',

@@ -12,7 +12,7 @@ class MaterialController extends Controller
      */
     public function index()
     {
-        $materials = Material::paginate(25);
+        $materials = Material::orderBy('quantity', 'asc')->paginate(10);
         return response()->json($materials);
     }
 

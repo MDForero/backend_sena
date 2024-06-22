@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nit')->max(20)->unique()->required();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('imgProfile')->nullable();
             $table->enum('role',['admin','client','manager','waitress','chef',])->default('client');
             $table->enum('status',['authorized','unauthorized'])->default('unauthorized'); 
             $table->set('permissions',['dashboard','ordenes', 'articulos', 'facturacion', 'usuarios', 'inventario'])->default('dashboard');  
