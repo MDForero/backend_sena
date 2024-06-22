@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('imgProfile')->nullable();
             $table->enum('role',['admin','client','manager','waitress','chef',])->default('client');
             $table->enum('status',['authorized','unauthorized'])->default('unauthorized'); 
-            $table->set('permissions',['dashboard','ordenes', 'articulos', 'facturacion', 'usuarios', 'inventario'])->default('dashboard');  
+            $table->string('permissions')->default('dashboard');  
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();
